@@ -5,7 +5,6 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -16,7 +15,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 
 import NavHeader from './NavHeader'
-import {Block, Book, Check, Info, LocalLibrary, MyLocation, Note} from "@material-ui/icons";
+import {Book, HowToReg, Info, LibraryBooks, LocalLibrary, MyLocation, Note, People} from "@material-ui/icons";
+import {Link} from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function MiniDrawer() {
+export default function MiniDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -104,7 +104,7 @@ export default function MiniDrawer() {
                     [classes.appBarShift]: open,
                 })}
             >
-                <NavHeader open={open} handleDrawerOpen={handleDrawerOpen} />
+                <NavHeader open={open} handleDrawerOpen={handleDrawerOpen}/>
             </AppBar>
             <Drawer
                 variant="permanent"
@@ -126,68 +126,71 @@ export default function MiniDrawer() {
                 </div>
                 <Divider/>
                 <List>
-                    <ListItem button key={1}>
-                        <ListItemIcon>{ <HomeIcon/> }</ListItemIcon>
-                        <ListItemText primary={"Home"}/>
-                    </ListItem>
-                    <Divider/>
-                    <ListItem button key={2}>
-                        <ListItemIcon>{ <LocalLibrary/> }</ListItemIcon>
-                        <ListItemText primary={"Libraries"}/>
-                    </ListItem>
-                    <Divider/>
+                    <Link to='/'>
+                        <ListItem button key={1}>
+                            <ListItemIcon>{<HomeIcon/>}</ListItemIcon>
+                            <ListItemText primary={"Home"}/>
+                        </ListItem>
+                    </Link>
+                    <Divider style={{marginTop: '10px', marginBottom: '10px'}}/>
+                    <Link to='library'>
+                        <ListItem button key={2}>
+                            <ListItemIcon>{<LocalLibrary/>}</ListItemIcon>
+                            <ListItemText primary={"Library"}/>
+                        </ListItem>
+                    </Link>
+                    <Divider style={{marginTop: '10px', marginBottom: '10px'}}/>
+
+                    <Link to='users'>
+                        <ListItem button key={20}>
+                            <ListItemIcon>{<People/>}</ListItemIcon>
+                            <ListItemText primary={"Users"}/>
+                        </ListItem>
+                    </Link>
+                    <Divider style={{marginTop: '10px', marginBottom: '10px'}}/>
+
+                    <Link to='books'>
+                        <ListItem button key={10}>
+                            <ListItemIcon>{<LibraryBooks/>}</ListItemIcon>
+                            <ListItemText primary={"Books"}/>
+                        </ListItem>
+                    </Link>
+                    <Divider style={{marginTop: '10px', marginBottom: '10px'}}/>
+
                     <ListItem button key={7}>
-                        <ListItemIcon>{ <MyLocation/> }</ListItemIcon>
+                        <ListItemIcon>{<MyLocation/>}</ListItemIcon>
                         <ListItemText primary={"Locations, hours"}/>
                     </ListItem>
-                    <Divider/>
+                    <Divider style={{marginTop: '10px', marginBottom: '10px'}}/>
+
                     <ListItem button key={3}>
-                        <ListItemIcon>{ <Block/> }</ListItemIcon>
+                        <ListItemIcon>{<HowToReg/>}</ListItemIcon>
                         <ListItemText primary={"Library regulations"}/>
                     </ListItem>
-                    <Divider/>
+                    <Divider style={{marginTop: '10px', marginBottom: '10px'}}/>
+
                     <ListItem button key={4}>
-                        <ListItemIcon>{ <Book/> }</ListItemIcon>
+                        <ListItemIcon>{<Book/>}</ListItemIcon>
                         <ListItemText primary={"Borrow a book"}/>
                     </ListItem>
-                    <Divider/>
+                    <Divider style={{marginTop: '10px', marginBottom: '10px'}}/>
+
                     <ListItem button key={5}>
-                        <ListItemIcon>{ <Note/> }</ListItemIcon>
+                        <ListItemIcon>{<Note/>}</ListItemIcon>
                         <ListItemText primary={"Reserve a book"}/>
                     </ListItem>
-                    <Divider/>
+                    <Divider style={{marginTop: '10px', marginBottom: '10px'}}/>
+
                     <ListItem button key={6}>
-                        <ListItemIcon>{ <Info/> }</ListItemIcon>
+                        <ListItemIcon>{<Info/>}</ListItemIcon>
                         <ListItemText primary={"About us"}/>
                     </ListItem>
-                    <Divider/>
+                    <Divider style={{marginTop: '10px', marginBottom: '10px'}}/>
                 </List>
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar}/>
-                <Typography paragraph>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                    ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-                    facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-                    gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-                    donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                    adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-                    Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-                    imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-                    arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-                    donec massa sapien faucibus et molestie ac.
-                </Typography>
-                <Typography paragraph>
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-                    facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-                    tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-                    consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-                    vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-                    hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-                    tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-                    nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-                    accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-                </Typography>
+                {props.children}
             </main>
         </div>
     );

@@ -1,0 +1,25 @@
+.mgTop-30 {
+    margin-top: 40px;
+}
+
+.form {
+    width: 100%;
+    padding: 0 40px;
+}
+
+.flexCenter {
+    display: flex;
+}
+
+.button {
+    height: 50px;
+    width: 100%;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.mgRight {
+    margin-right: 10px;
+}
