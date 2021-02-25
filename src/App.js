@@ -5,25 +5,33 @@ import Register from "./components/Register";
 import Page from './components/NavigationDrawer';
 import Books from "./components/Books";
 import Customers from './components/Customers';
+import useToken from "./hooks/useToken";
 
 
 function App() {
+    const {token, setToken} = useToken();
+
+    console.log(token);
+    if (!token) {
+        return <Router>
+            <Route exact path="/register">
+                <Register/>
+            </Route>
+            <Route exact path='/login'>
+                <Login setToken={setToken}/>
+            </Route>
+        </Router>
+    }
     return (
-        <div className="App">
+        <div>
             <Router>
                 <Switch>
-                    <Route path="/login">
-                        <Login/>
-                    </Route>
-                    <Route path="/register">
-                        <Register/>
-                    </Route>
-                    <Route path="/users">
+                    <Route exact path="/users">
                         <Page>
                             <Customers/>
                         </Page>
                     </Route>
-                    <Route path="/">
+                    <Route exact path="/">
                         <Page>
                             <Books/>
                         </Page>

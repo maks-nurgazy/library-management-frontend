@@ -1,10 +1,13 @@
 import * as React from 'react';
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {useInput} from "../hooks/useInput";
+import {makeStyles} from '@material-ui/core/styles';
 import {DataGrid} from '@material-ui/data-grid';
 import {Button} from "@material-ui/core";
-import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import TextField from "@material-ui/core/TextField";
-import {useInput} from "../hooks/useInput";
+import {loadCustomers, updateCustomer} from "../store/customers";
 
 function getModalStyle() {
     return {
@@ -65,7 +68,7 @@ export default function DataTable() {
                     </Button>
                     <Button
                         onClick={() => {
-                            removeCustomer(params.row);
+                            // removeCustomer(params.row);
                         }}
                         variant="contained"
                         color="secondary"
@@ -82,56 +85,7 @@ export default function DataTable() {
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
-    const [data, setData] = React.useState([
-        {
-            "id": 1,
-            "first_name": "Maksatbek",
-            "last_name": "Bolushov",
-            "email": "testadmin@test.com"
-        },
-        {
-            "id": 2,
-            "first_name": "admin",
-            "last_name": "admin",
-            "email": "admin@test.com"
-        },
-        {
-            "id": 3,
-            "first_name": "Maksatbek",
-            "last_name": "Bolushov",
-            "email": "testadmin@test.com"
-        },
-        {
-            "id": 4,
-            "first_name": "admin",
-            "last_name": "admin",
-            "email": "admin@test.com"
-        },
-        {
-            "id": 5,
-            "first_name": "Maksatbek",
-            "last_name": "Bolushov",
-            "email": "testadmin@test.com"
-        },
-        {
-            "id": 6,
-            "first_name": "admin",
-            "last_name": "admin",
-            "email": "admin@test.com"
-        },
-        {
-            "id": 7,
-            "first_name": "Maksatbek",
-            "last_name": "Bolushov",
-            "email": "testadmin@test.com"
-        },
-        {
-            "id": 8,
-            "first_name": "admin",
-            "last_name": "admin",
-            "email": "admin@test.com"
-        },
-    ]);
+    const [id, setId] = React.useState(0);
     const {value: firstName, setValue: setFirstName, bind: bindFirstName, reset: resetFirstName} = useInput('');
     const {value: lastName, setValue: setLastName, bind: bindLastName, reset: resetLastName} = useInput('');
     const {value: email, setValue: setEmail, bind: bindEmail, reset: resetEmail} = useInput('');
@@ -144,9 +98,11 @@ export default function DataTable() {
             last_name: lastName,
             email: email
         };
+        dispatch(updateCustomer(id, data));
         resetFirstName();
         resetLastName();
         resetEmail();
+        handleClose();
     }
 
     const handleClose = () => {
@@ -155,21 +111,29 @@ export default function DataTable() {
 
     const handleOpen = (row) => {
         setOpen(true);
+        setId(row.id);
         setFirstName(row.first_name);
         setLastName(row.last_name);
         setEmail(row.email);
     };
 
-    const removeCustomer = () => {
-        const newData = data.filter(e => {
-            return e.first_name !== 'Maksatbek'
-        });
-        setData(newData);
-    };
+    // const removeCustomer = () => {
+    //     const newData = customers.filter(e => {
+    //         return e.first_name !== 'Maksatbek'
+    //     });
+    //     setData(newData);
+    // };
 
     const addCustomer = (row) => {
         alert(row.first_name);
     };
+
+    const dispatch = useDispatch();
+    const customers = useSelector(state => state.entities.customers.list);
+
+    useEffect(() => {
+        dispatch(loadCustomers());
+    }, []);
 
 
     const body = (
@@ -218,7 +182,7 @@ export default function DataTable() {
         <div style={{height: '80vh', width: '100%'}}>
             <Button variant={"contained"} color={"primary"} onClick={addCustomer}>Add Customer</Button>
             <DataGrid
-                rows={data}
+                rows={customers}
                 columns={columns}
                 pageSize={100}
                 hideFooterPagination
